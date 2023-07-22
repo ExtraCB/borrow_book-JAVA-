@@ -55,11 +55,13 @@ public class borrow_controller extends HttpServlet {
 				ArrayList<Borrow_Model> blist = BMDAO.find(search_result);
 				request.setAttribute("borrowlist", blist);
 				request.getRequestDispatcher("index.jsp").forward(request, response);
+				
 			}else if(mode.equals("stats")) {
 				StatsDAO stdao = new StatsDAO();
 				ArrayList<Stats_Model>  stats_data = stdao.Get_stats();
 				request.setAttribute("stats_result", stats_data);
 				request.getRequestDispatcher("Stats.jsp").forward(request, response);
+				
 			}else if(mode.equals("borrow")) {
 				MemberDAO mmdao = new MemberDAO();
 				ArrayList<Member_Model> mm = mmdao.findAll();
@@ -94,6 +96,43 @@ public class borrow_controller extends HttpServlet {
 					request.getRequestDispatcher("borrow_controller?mode=borrow").forward(request, response);
 				}
 				
+			}else if(mode.equals("return")) {
+				
+				BorrowDAO bdao = new BorrowDAO();
+				
+				ArrayList<Borrow_Model> brm = bdao.findAllNotReturn();
+			
+				
+				request.setAttribute("bnotrt",brm);
+				
+				request.getRequestDispatcher("Return.jsp").forward(request, response);
+			}else if(mode.equals("return_submit")) {
+				String br_date_br = request.getParameter("br_date_br");
+				String fine = request.getParameter("fine");
+				String br_date_rt = request.getParameter("date_rt");
+				String b_id = request.getParameter("b_id");
+				String m_id = request.getParameter("m_id");
+				
+				BorrowDAO bdao = new BorrowDAO();
+				
+				int status = bdao.ReturnEdit(br_date_br, fine, br_date_rt, b_id, m_id);
+				
+				if(status != 0) {
+					session.setAttribute("success", "คืนหนังสือสำเร็จ !");
+					request.getRequestDispatcher("borrow_controller?mode=return").forward(request, response);
+				}else {
+					session.setAttribute("error", "คืนหนังสือไม่สำเร็จ !");
+					request.getRequestDispatcher("borrow_controller?mode=return").forward(request, response);
+				}
+			}else if(mode.equals("search_return")) {
+				String search = request.getParameter("search");
+				
+				BorrowDAO bdao = new BorrowDAO();
+				
+				ArrayList<Borrow_Model> brm = bdao.SearchAllNotReturn(search);
+				
+				request.setAttribute("bnotrt",  brm);
+				request.getRequestDispatcher("Return.jsp").forward(request, response);
 			}
 			
 		}else {
