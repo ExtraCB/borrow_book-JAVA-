@@ -69,10 +69,31 @@ public class borrow_controller extends HttpServlet {
 				ArrayList<Book_Model> bm = bdao.findAll();
 				
 				request.setAttribute("MemberAll",mm);
-				request.setAttribute("bookAll", bm);
+				request.setAttribute("BookAll", bm);
 				
-				request.getRequestDispatcher("Borrow.jsp?form=1").forward(request, response);
+				request.getRequestDispatcher("Borrow.jsp").forward(request, response);
 //				response.sendRedirect("Borrow.jsp?form=1");
+			}else if(mode.equals("borrow_submit")) {
+				 
+				 
+				String bid = request.getParameter("b_id");
+				String mid = request.getParameter("m_id");
+				String date = request.getParameter("DateSelected");
+				
+				System.out.println("b_id" + bid + "m_id" + mid);
+				
+				BorrowDAO bdao = new BorrowDAO();
+				
+				int status = bdao.AddBorrow(bid, mid, date);
+				
+				if(status != 0) {
+					session.setAttribute("success", "เพิ่มการยืมหนังสือสำเร็จ !");
+					request.getRequestDispatcher("borrow_controller?mode=borrow").forward(request, response);
+				}else {
+					session.setAttribute("error", "เพิ่มการยืมหนังสือไม่สำเร็จ !");
+					request.getRequestDispatcher("borrow_controller?mode=borrow").forward(request, response);
+				}
+				
 			}
 			
 		}else {

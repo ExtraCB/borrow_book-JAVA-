@@ -72,4 +72,37 @@ public class BorrowDAO {
 		
 		return book_borrow;
 	}
+	
+	
+	
+	public int AddBorrow(String bid, String mid,String date) {
+		int status = 0;
+		
+		String sql = "INSERT INTO `tb_borrow_book`(`br_date_br` ,`b_id`, `m_user`) VALUES (?,?,?)";
+		ConnectDB db = new ConnectDB();
+		
+		
+		try {
+			PreparedStatement pSTMT = db.getCon().prepareStatement(sql);
+			pSTMT.setString(1, date);
+			pSTMT.setString(2, bid);
+			pSTMT.setString(3, mid);
+			
+			
+			System.out.println(pSTMT);
+			
+			status = pSTMT.executeUpdate();
+			
+			pSTMT.close();
+			
+			db.closeConnect();
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return status;
+	}
 }
