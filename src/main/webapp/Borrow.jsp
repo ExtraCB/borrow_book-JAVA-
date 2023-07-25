@@ -70,18 +70,20 @@ String error = (String) session.getAttribute("error");
 								<form action="" method="post">
 									<h3 style="text-align: center;">ยืมหนังสือ</h3>
 
-									<label class="form-label"> ผู้ที่ต้องการยืม : </label> <select
-										class="form-control" id="selectMember">
-										<option selected>โปรดเลือก ผู้ที่ต้องการยืมหนังสือ</option>
-										<%
-										ArrayList<Member_Model> mm = (ArrayList<Member_Model>) request.getAttribute("MemberAll");
+									<label class="form-label"> ผู้ที่ต้องการยืม : </label>
+									<%
+									ArrayList<Member_Model> mm = (ArrayList<Member_Model>) request.getAttribute("MemberAll");
+									%>
 
-										for (Member_Model ml : mm) {
-										%>
-										<option value="<%=ml.getM_user()%>"><%=ml.getM_user() + "  " + ml.getM_name()%></option>
-										<%
-										}
-										%>
+									<div class="input-group mb-3">
+										<input type="text" class="form-control"
+											placeholder="กรอกชื่อผู้ใช้ที่ต้องการยืม"
+											aria-label="Recipient's username"
+											aria-describedby="button-addon2">
+										<button class="btn btn-outline-primary" type="button"
+											id="button-addon2">ตกลง</button>
+									</div>
+
 									</select> <label class="form-label">หนังสือที่ต้องการยืม : </label> <select
 										class="form-control" id="selectBook">
 										<option selected>โปรดเลือก หนังสือที่ต้องการยืม</option>
