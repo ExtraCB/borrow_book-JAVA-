@@ -52,7 +52,6 @@ String error = (String) session.getAttribute("error");
 					<div class="card-body ">
 						<h4 class="text-center">การจัดการข้อมูลการยืมหนังสือ-ยืมหนังสือ</h4>
 
-
 						<div class="row mb-5 mt-4">
 							<div class="col-4"></div>
 							<div class="col-4 text-center">
@@ -79,7 +78,7 @@ String error = (String) session.getAttribute("error");
 
 										for (Member_Model ml : mm) {
 										%>
-										<option value="<%= ml.getM_user()%>"><%=ml.getM_user() + "  " + ml.getM_name()%></option>
+										<option value="<%=ml.getM_user()%>"><%=ml.getM_user() + "  " + ml.getM_name()%></option>
 										<%
 										}
 										%>
@@ -106,9 +105,8 @@ String error = (String) session.getAttribute("error");
 										: </label> <input type="text" class="form-control" name="showBook"
 										id="showBook" required /> <label class="form-label">วันที่ยืม
 										: </label> <input type="date" class="form-control" name="DateSelected"
-										required /> 
-										<input type="hidden" name="b_id" id="bid" /> 
-										<input type="hidden" name="m_id" id="mid" />
+										required /> <input type="hidden" name="b_id" id="bid" /> <input
+										type="hidden" name="m_id" id="mid" />
 
 
 									<button type="submit" class="btn btn-success mt-3" name="mode"
@@ -132,29 +130,35 @@ String error = (String) session.getAttribute("error");
 		const showMember = document.getElementById('showMember');
 		const showBook = document.getElementById('showBook');
 
-		bookselect.addEventListener('change', function() {
-	        const selectBookValue = bookselect.value;
-	        const selectBookOption = bookselect.options[bookselect.selectedIndex];
-	        const selectBookContent = selectBookOption.textContent;
-	        const textBook = selectBookContent.trim();
+		bookselect
+				.addEventListener(
+						'change',
+						function() {
+							const selectBookValue = bookselect.value;
+							const selectBookOption = bookselect.options[bookselect.selectedIndex];
+							const selectBookContent = selectBookOption.textContent;
+							const textBook = selectBookContent.trim();
 
-	        bid.value = selectBookValue;
-	        showBook.value = textBook;
+							bid.value = selectBookValue;
+							showBook.value = textBook;
 
-	        console.log("b id " ,bid.value);
-	    });
+							console.log("b id ", bid.value);
+						});
 
-	    memberselect.addEventListener('change', function() {
-	        const selectMemberValue = memberselect.value;
-	        const selectMemberOption = memberselect.options[memberselect.selectedIndex];
-	        const selectMemberContent = selectMemberOption.textContent;
-	        const textMember = selectMemberContent.trim();
+		memberselect
+				.addEventListener(
+						'change',
+						function() {
+							const selectMemberValue = memberselect.value;
+							const selectMemberOption = memberselect.options[memberselect.selectedIndex];
+							const selectMemberContent = selectMemberOption.textContent;
+							const textMember = selectMemberContent.trim();
 
-	        mid.value = selectMemberValue;
-	        showMember.value = textMember;
+							mid.value = selectMemberValue;
+							showMember.value = textMember;
 
-	        console.log(mid.value);
-	    });
+							console.log(mid.value);
+						});
 	</script>
 </body>
 </html>

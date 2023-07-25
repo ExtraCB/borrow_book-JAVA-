@@ -34,6 +34,7 @@ ArrayList<Borrow_Model> borrow_list = (ArrayList<Borrow_Model>) request.getAttri
 								<button class="btn btn-outline-success" type="submit"
 									id="button-addon1">ค้นหา</button>
 								<input type="hidden" name="mode" value="search_book" />
+								<a href="borrow_controller" class="btn btn-primary">refresh</a>
 							</div>
 						</form>
 
@@ -41,7 +42,7 @@ ArrayList<Borrow_Model> borrow_list = (ArrayList<Borrow_Model>) request.getAttri
 						<div class="row">
 							<div class="col-8"></div>
 							<div class="col-4">
-								<a href="borrow_controller?mode=stats" target="_blank"
+								<a href="borrow_controller?mode=stats"
 									class="btn btn-outline-success ">ข้อมูลสถิติ</a>
 									<a href="borrow_controller?mode=borrow"
 									class="btn btn-outline-success ">ยืม-คืนหนังสือ</a>

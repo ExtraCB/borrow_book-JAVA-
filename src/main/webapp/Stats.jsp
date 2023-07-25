@@ -36,6 +36,7 @@ ArrayList<Stats_Model>  stats_data = (ArrayList<Stats_Model>) request.getAttribu
 				<div class="card rounded " style="width: 60rem;">
 					<div class="card-body ">
 						<h4 class="text-center">ข้อมูลสถิติของห้องสมุด</h4>
+						<a href="borrow_controller" class="btn btn-primary">Homepage</a>
 						
 						<div class="row row-cols-2">
 						<% for(Stats_Model stm : stats_data){ %>
