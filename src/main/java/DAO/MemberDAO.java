@@ -36,4 +36,31 @@ public class MemberDAO {
 	return mbmd;
 	}
 	
+	
+	
+	public Member_Model findOne(String search_member) {
+		
+			ConnectDB db = new ConnectDB();
+			
+			String sql = "SELECT * FROM tb_member WHERE m_user = ?";
+			
+			try {
+				PreparedStatement stmt = db.getCon().prepareStatement(sql);
+				stmt.setString(1, search_member);
+				
+				ResultSet rs = stmt.executeQuery();
+				
+				while(rs.next()) {
+					Member_Model mm = new Member_Model(rs.getString("m_user"),rs.getString("m_pass"),rs.getString("m_name"),rs.getString("m_phone"));
+					return mm;
+				}
+				
+				
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		
+		return null;
+	}
+	
 }

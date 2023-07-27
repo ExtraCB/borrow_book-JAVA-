@@ -89,6 +89,7 @@ public class borrow_controller extends HttpServlet {
 				int status = bdao.AddBorrow(bid, mid, date);
 				
 				if(status != 0) {
+					session.invalidate();
 					session.setAttribute("success", "เพิ่มการยืมหนังสือสำเร็จ !");
 					request.getRequestDispatcher("borrow_controller?mode=borrow").forward(request, response);
 				}else {
@@ -133,6 +134,41 @@ public class borrow_controller extends HttpServlet {
 				
 				request.setAttribute("bnotrt",  brm);
 				request.getRequestDispatcher("Return.jsp").forward(request, response);
+			}else if(mode.equals("filter_member")) {
+				String search_name = request.getParameter("search_member");
+				MemberDAO mdao = new MemberDAO();
+				
+				Member_Model mm = mdao.findOne(search_name);
+				
+				
+				
+				if(mm != null) {
+					session.setAttribute( "name_memberFind",mm.getM_name());
+					session.setAttribute( "user_memberFind",mm.getM_user());
+					request.getRequestDispatcher("borrow_controller?mode=borrow").forward(request, response);
+				}else {
+					session.setAttribute("name_memberFind","");
+					session.setAttribute("user_memberFind","");
+					session.setAttribute("error", "ค้นหาผู้ใช้งานไม่เจอ !");
+					request.getRequestDispatcher("borrow_controller?mode=borrow").forward(request, response);
+				}
+			}else if(mode.equals("filter_book")) {
+				String search_name = request.getParameter("search_book");
+				
+				BookDAO bdao = new BookDAO();
+				
+				Book_Model bkm = bdao.findOne(search_name);
+				
+				if(bkm != null) {
+					session.setAttribute("name_BookFind", bkm.getB_name());
+					session.setAttribute("id_BookFind",bkm.getB_id());
+					request.getRequestDispatcher("borrow_controller?mode=borrow").forward(request,response);
+				}else {
+					session.setAttribute("name_BookFind","");
+					session.setAttribute("id_BookFind","");
+					session.setAttribute("error", "ค้นหาหนังสือไม่เจอ !");
+					request.getRequestDispatcher("borrow_controller?mode=borrow").forward(request, response);
+				}
 			}
 			
 		}else {

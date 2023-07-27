@@ -11,6 +11,14 @@ ArrayList<Borrow_Model> borrow_list = (ArrayList<Borrow_Model>) request.getAttri
 
 String success = (String) session.getAttribute("success");
 String error = (String) session.getAttribute("error");
+
+
+String name_member = (String) session.getAttribute("name_memberFind");
+String user_member = (String) session.getAttribute("user_memberFind");
+
+
+String name_book = (String) session.getAttribute("name_BookFind");
+String id_book = (String) session.getAttribute("id_BookFind");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -67,48 +75,59 @@ String error = (String) session.getAttribute("error");
 						<div class="row">
 							<div class="col-4"></div>
 							<div class="col-4">
-								<form action="" method="post">
-									<h3 style="text-align: center;">ยืมหนังสือ</h3>
 
-									<label class="form-label"> ผู้ที่ต้องการยืม : </label>
-									<%
-									ArrayList<Member_Model> mm = (ArrayList<Member_Model>) request.getAttribute("MemberAll");
-									%>
+								<h3 style="text-align: center;">ยืมหนังสือ</h3>
+
+								<label class="form-label"> ผู้ที่ต้องการยืม : </label>
+								<form action="borrow_controller" method="post">
 
 									<div class="input-group mb-3">
-										<input type="text" class="form-control"
+
+										<input type="text" class="form-control" name="search_member"
 											placeholder="กรอกชื่อผู้ใช้ที่ต้องการยืม"
 											aria-label="Recipient's username"
 											aria-describedby="button-addon2">
-										<button class="btn btn-outline-primary" type="button"
-											id="button-addon2">ตกลง</button>
+										<button class="btn btn-outline-primary" name="mode"
+											value="filter_member" type="submit" id="button-addon2">ตกลง</button>
+
 									</div>
-
-									</select> <label class="form-label">หนังสือที่ต้องการยืม : </label> <select
-										class="form-control" id="selectBook">
-										<option selected>โปรดเลือก หนังสือที่ต้องการยืม</option>
-										<%
-										ArrayList<Book_Model> bm = (ArrayList<Book_Model>) request.getAttribute("BookAll");
-
-										for (Book_Model bbm : bm) {
-										%>
-										<option value="<%=bbm.getB_id()%>"><%=bbm.getB_id() + "  " + bbm.getB_name()%></option>
-										<%
-										}
-										%>
-									</select>
 								</form>
+
+								<label class="form-label">หนังสือที่ต้องการยืม : </label>
+								
+								<form action="borrow_controller" method="post">
+
+								<div class="input-group mb-3">
+									<input type="text" class="form-control" name="search_book"
+										placeholder="หนังสือที่ต้องการยืม"
+										aria-label="Recipient's username"
+										aria-describedby="button-addon2">
+									<button class="btn btn-outline-primary" type="submit" name="mode" value="filter_book"
+										id="button-addon2">ตกลง</button>
+								</div>
+								
+								</form>
+
 								<hr />
 
 								<form action="borrow_controller" method="post">
 									<label class="form-label">ผู้ที่ต้องการยืม : </label> <input
-										type="text" class="form-control" name="showMember"
-										id="showMember" required /> <label class="form-label">หนังสือต้องการยืม
-										: </label> <input type="text" class="form-control" name="showBook"
-										id="showBook" required /> <label class="form-label">วันที่ยืม
-										: </label> <input type="date" class="form-control" name="DateSelected"
-										required /> <input type="hidden" name="b_id" id="bid" /> <input
-										type="hidden" name="m_id" id="mid" />
+										type="text" class="form-control" name="showMember" value="<%= name_member != null ? name_member : ""  %>" id="showMember" required />
+										
+										
+										 
+										<label class="form-label">หนังสือต้องการยืม: </label>
+										 <input type="text" class="form-control" name="showBook" value="<%= name_book != null ? name_book : ""  %>"
+										id="showBook" required /> 
+										
+										<label class="form-label">รหัสหนังสือต้องการยืม: </label>
+										 <input type="text" class="form-control" name="b_id" value="<%= id_book != null ? id_book : ""  %>"
+										id="showBook" required />
+										
+										<label class="form-label">วันที่ยืม
+										: </label> 
+										<input type="date" class="form-control" name="DateSelected" required /> 
+										<input type="hidden" name="m_id" id="mid" value="<%= user_member != null ? user_member : ""  %>" />
 
 
 									<button type="submit" class="btn btn-success mt-3" name="mode"
@@ -122,45 +141,6 @@ String error = (String) session.getAttribute("error");
 			</div>
 		</div>
 	</div>
-	<script>
-		const bookselect = document.getElementById('selectBook');
-		const memberselect = document.getElementById('selectMember');
 
-		const bid = document.getElementById('bid');
-		const mid = document.getElementById('mid');
-
-		const showMember = document.getElementById('showMember');
-		const showBook = document.getElementById('showBook');
-
-		bookselect
-				.addEventListener(
-						'change',
-						function() {
-							const selectBookValue = bookselect.value;
-							const selectBookOption = bookselect.options[bookselect.selectedIndex];
-							const selectBookContent = selectBookOption.textContent;
-							const textBook = selectBookContent.trim();
-
-							bid.value = selectBookValue;
-							showBook.value = textBook;
-
-							console.log("b id ", bid.value);
-						});
-
-		memberselect
-				.addEventListener(
-						'change',
-						function() {
-							const selectMemberValue = memberselect.value;
-							const selectMemberOption = memberselect.options[memberselect.selectedIndex];
-							const selectMemberContent = selectMemberOption.textContent;
-							const textMember = selectMemberContent.trim();
-
-							mid.value = selectMemberValue;
-							showMember.value = textMember;
-
-							console.log(mid.value);
-						});
-	</script>
 </body>
 </html>
